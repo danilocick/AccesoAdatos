@@ -64,11 +64,11 @@ public class DBAccessor {
 		String url = null;
 		try {
 			// Loads the driver
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.postgresql.Driver");
 
 			// Preprara connexió a la base de dades
 			StringBuffer sbUrl = new StringBuffer();
-			sbUrl.append("jdbc:mysql:");
+			sbUrl.append("jdbc:postgresql:");
 			if (host != null && !host.equals("")) {
 				sbUrl.append("//").append(host);
 				if (port != null && !port.equals("")) {
@@ -158,13 +158,6 @@ public class DBAccessor {
 
 
 	public void altaArticle() throws SQLException, NumberFormatException, IOException, ParseException {
-
-//		id_article NUMERIC(4,0) PRIMARY KEY,
-//		id_autor NUMERIC(4,0) NOT NULL,
-//		titol VARCHAR(40) NOT NULL,
-//		data_creacio DATE NOT NULL,
-//		publicable VARCHAR(1) NOT NULL,
-//		id_revista NUMERIC(4,0) DEFAULT NULL
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 		Scanner reader = new Scanner(System.in);
@@ -303,7 +296,9 @@ public class DBAccessor {
 
 	public void sortir() throws SQLException {
 		System.out.println("ADÉU!");
+		conn.commit();
 		conn.close();
+		System.exit(0);
 	}
 	
 	// TODO
