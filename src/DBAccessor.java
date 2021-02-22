@@ -159,11 +159,14 @@ public class DBAccessor {
 
 		Statement statement = null;
 		statement = conn.createStatement();
+		System.out.println(format.format(date));
 		statement.executeUpdate("INSERT INTO revistes (id_revista, titol, data_publicacio) VALUES ("+id+",'"+titol+"','"+format.format(date)+"')");
 		conn.commit();
 	}
 
-
+	/**
+	 * push an article to DB connection
+	 */
 	public void altaArticle() throws SQLException, NumberFormatException, IOException, ParseException {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
@@ -176,19 +179,27 @@ public class DBAccessor {
 		System.out.println("Introdueix el titol");
 		String titol = moco.nextLine();
 		System.out.println("Introdueix la data de publicacio (yyyy-mm-dd)");
-		Date creationDate = format.parse(moco.nextLine());
+		Date date = format.parse(moco.nextLine());
 		System.out.println("publicable (S/N)");
 		char publicable = moco.next().charAt(0);
-		System.out.println("Introdueix el id de revista");
-		int id_revista = reader.nextInt();
 
-		Statement statement = null;
-		statement = conn.createStatement();
-		statement.executeUpdate("INSERT INTO articles (id_article, id_autor, titol, data_creacio, publicable, id_revista) VALUES ("+idArticle+",'"+idAutor+"','"+titol+"','"+format.format(creationDate)+",'"+publicable+",'"+id_revista+"')");
+
+		System.out.println("Vols introduir el id de revista? (True/False)");
+		Scanner sc = new Scanner(System.in);
+		boolean x = sc.nextBoolean();
+		if(x){
+			System.out.println("Introdueix el id de revista");
+			int id_revista = reader.nextInt();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate("INSERT INTO articles (id_article, id_autor, titol, data_creacio, publicable, id_revista) VALUES ("+idArticle+","+idAutor+",'"+titol+"','"+format.format(date)+"','"+publicable+"',"+id_revista+")");
+		}else{
+			Statement statement = conn.createStatement();
+			statement.executeUpdate("INSERT INTO articles (id_article, id_autor, titol, data_creacio, publicable, id_revista) VALUES ("+idArticle+","+idAutor+",'"+titol+"','"+format.format(date)+"','"+publicable+"',NULL)");
+		}
 
 		conn.commit();
 	}
-	
+
 	public void afegeixArticleARevista(Connection conn) throws SQLException {
 
 		ResultSet rs = null;
@@ -295,7 +306,7 @@ public class DBAccessor {
 		Scanner reader = new Scanner(System.in);
 		ResultSet rs;
 
-		rs = st.executeQuery("SELECT a.nom, r.titol, ar.titol FROM autors a, revistes r, articles ar WHERE ar.id_autor=a.id_autor AND ar.id_revista=r.id_revista");
+		rs = st.executeQuery("SELECT a.nom, r.titol, ar.titol FROM autors a, revistes r, articles ar WHERE ar.id_autor=a.id_autor AND ar.id_revista=r.id_revista AND publicable='S'");
 		while (rs.next()) System.out.println("Nom autor: " +rs.getString(1) + "\tNomRevista: " + rs.getString(2) + "\tNom article: " + rs.getString(3));
 		rs.close();
 		st.close();
