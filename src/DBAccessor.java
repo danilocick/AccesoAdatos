@@ -277,25 +277,24 @@ public class DBAccessor {
 	// TODO
 	public void desassignaArticleARevista(Connection conn) throws SQLException, IOException {
 		ResultSet rs = null;
-//		Statement st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-//		InputStreamReader isr = new InputStreamReader(System.in);
-//		BufferedReader br = new BufferedReader(isr);
-//
-//		try {
-//			System.out.println("selecciona l'id de article");
-//			int resposta = Integer.parseInt(br.readLine());
-//
-//			rs = st.executeQuery("SELECT * FROM articles WHERE id_article="+resposta+";");
-//			// actualitza el camp
-//			rs.updateInt("id_revista",0);
-		rs.updateNull();
-//			// actualitza la fila
-//			rs.updateRow();
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		conn.commit();
+		Statement st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+
+		try {
+			System.out.println("selecciona l'id de article");
+			int resposta = Integer.parseInt(br.readLine());
+
+			rs = st.executeQuery("SELECT * FROM articles WHERE id_article="+resposta+";");
+			// actualitza el camprs.updateInt("id_revista",0);
+			rs.updateNull("id_revista");
+			// actualitza la fila
+			rs.updateRow();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		conn.commit();
 	}
 
 	
