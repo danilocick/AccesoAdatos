@@ -117,6 +117,9 @@ public class DBAccessor {
 	}
 
 
+	/**
+	 * push an autor to DB connection
+	 */
 	public void altaAutor() throws SQLException, IOException {
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Introdueix el id de l'autor");
@@ -135,9 +138,13 @@ public class DBAccessor {
 		statement = conn.createStatement();
 		statement.executeUpdate("INSERT INTO autors VALUES ("+id+",'"+nom+"','"+any_naixement+"','"+nacionalitat+"','"+actiu+"')");
 
+		conn.commit();
 
 	}
 
+	/**
+	 * push an autor to DB connection
+	 */
 	public void altaRevista() throws SQLException, NumberFormatException, IOException, ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 		Scanner reader = new Scanner(System.in);
@@ -153,7 +160,7 @@ public class DBAccessor {
 		Statement statement = null;
 		statement = conn.createStatement();
 		statement.executeUpdate("INSERT INTO revistes (id_revista, titol, data_publicacio) VALUES ("+id+",'"+titol+"','"+format.format(date)+"')");
-
+		conn.commit();
 	}
 
 
@@ -179,7 +186,7 @@ public class DBAccessor {
 		statement = conn.createStatement();
 		statement.executeUpdate("INSERT INTO articles (id_article, id_autor, titol, data_creacio, publicable, id_revista) VALUES ("+idArticle+",'"+idAutor+"','"+titol+"','"+format.format(creationDate)+",'"+publicable+",'"+id_revista+"')");
 
-		
+		conn.commit();
 	}
 	
 	public void afegeixArticleARevista(Connection conn) throws SQLException {
@@ -215,6 +222,7 @@ public class DBAccessor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		conn.commit();
 	}
 
 	
@@ -231,8 +239,8 @@ public class DBAccessor {
 		// demanar el nou títol per la revista
 		// actualitzar el camp
 		// actualitzar la fila
-		
-	
+
+		conn.commit();
 	}
 	
 
@@ -254,7 +262,7 @@ public class DBAccessor {
 		// actualitzar la fila
 		// en altre cas imprimir "operació cancel·lada"
 
-		
+		conn.commit();
 	}
 
 	
@@ -291,12 +299,10 @@ public class DBAccessor {
 		while (rs.next()) System.out.println("Nom autor: " +rs.getString(1) + "\tNomRevista: " + rs.getString(2) + "\tNom article: " + rs.getString(3));
 		rs.close();
 		st.close();
-
 	}
 
 	public void sortir() throws SQLException {
 		System.out.println("ADÉU!");
-		conn.commit();
 		conn.close();
 		System.exit(0);
 	}
@@ -308,6 +314,7 @@ public class DBAccessor {
 		// per a cada línia del fitxer autors.csv
 		//realitzar la inserció corresponent
 
+		conn.commit();
 		
 	}
 }
