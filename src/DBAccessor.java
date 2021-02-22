@@ -210,7 +210,7 @@ public class DBAccessor {
 		try {
 			rs = st.executeQuery("SELECT * FROM articles WHERE id_revista IS NULL");
 
-			if (rs.next() == false) {
+			if (!rs.next()) {
 				System.out.println("No hi ha articles pendents d'associar revistes. ");
 			} else {
 				do{
@@ -239,18 +239,37 @@ public class DBAccessor {
 	
 	// TODO
 	public void actualitzarTitolRevistes(Connection conn) throws SQLException {
-		// TODO
-		// seguint l'exemple de la funció afegeixArticleARevista:
-		// definir variables locals
-		// realitzar la consulta de totes les revistes
-		// mentre hi hagi revistes:
-		// Mostrar el títol de la revista
-		// demanar si es vol canviar el seu títol
-		// en cas de que la resposta sigui "si"
-		// demanar el nou títol per la revista
-		// actualitzar el camp
-		// actualitzar la fila
+		ResultSet rs = null;
+		Statement st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
 
+		try {
+			rs = st.executeQuery("SELECT * FROM revistes");
+
+			if (!rs.next()) {
+				System.out.println("No hi ha titols.");
+			} else {
+				do{
+					System.out.println("Titol: "+ rs.getString("titol"));
+
+					System.out.println("Vol canviar el titol? (S/N)");
+					String resposta = br.readLine();
+
+					if (resposta.equals("S")) {
+						// demana l'identificador de la revista
+						System.out.println("Introdueix el titol");
+						String idRevista = br.readLine();
+						// actualitza el camp
+						rs.updateString("titol", idRevista);
+						// actualitza la fila
+						rs.updateRow();
+					}
+				}while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		conn.commit();
 	}
 	
