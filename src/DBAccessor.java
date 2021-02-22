@@ -210,16 +210,16 @@ public class DBAccessor {
 		try {
 			rs = st.executeQuery("SELECT * FROM articles WHERE id_revista IS NULL");
 
-			if (rs.getFetchSize() == 0) {
-				System.out.println("No hi ha articles pendents d'associar revistes. ");
+			if(!rs.next()){
+				System.out.println("No hi ha articles per afegir");
 			} else {
-				while (rs.next()) {
+				do {
 					System.out.println("Titol: " + rs.getString("titol"));
-					
-					System.out.println("Vol incorporar aquest article a una revista?");
+
+					System.out.println("Vol incorporar aquest article a una revista? (S/N)");
 					String resposta = br.readLine();
 
-					if (resposta.equals("si")) {
+					if (resposta.equals("S")) {
 						// demana l'identificador de la revista
 						System.out.println("Introdueix el id de la revista");
 						int idRevista = Integer.parseInt(br.readLine());
@@ -228,8 +228,9 @@ public class DBAccessor {
 						// actualitza la fila
 						rs.updateRow();
 					}
-				}
+				} while (rs.next());
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
