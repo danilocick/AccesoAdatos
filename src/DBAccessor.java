@@ -276,23 +276,25 @@ public class DBAccessor {
 
 	// TODO
 	public void desassignaArticleARevista(Connection conn) throws SQLException, IOException {
-
-		// TODO
-		// seguint l'exemple de la funció afegeixArticleARevista:
-		// definir variables locals
-		// sol·licitar l'identificador de la revista
-		// realitzar la consulta de tots els articles que corresponen a aquesta
-		// revista
-		// si no hi ha articles, emetre el missatge corresponent
-		// en altre cas, mentre hi hagi articles:
-		// Mostrar el títol de l'article i l'identificador de la revista
-		// demanar si es vol rescindir la seva incorporació a la revista
-		// en cas de que la resposta sigui "si"
-		// actualitzar el camp corresponent a null
-		// actualitzar la fila
-		// en altre cas imprimir "operació cancel·lada"
-
-		conn.commit();
+//		ResultSet rs = null;
+//		Statement st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+//		InputStreamReader isr = new InputStreamReader(System.in);
+//		BufferedReader br = new BufferedReader(isr);
+//
+//		try {
+//			System.out.println("selecciona l'id de article");
+//			int resposta = Integer.parseInt(br.readLine());
+//
+//			rs = st.executeQuery("SELECT * FROM articles WHERE id_article="+resposta+";");
+//			// actualitza el camp
+//			rs.updateInt("id_revista",0);
+//			// actualitza la fila
+//			rs.updateRow();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		conn.commit();
 	}
 
 	
@@ -336,7 +338,7 @@ public class DBAccessor {
 		conn.close();
 		System.exit(0);
 	}
-	
+
 	// TODO
 	public void carregaAutors(Connection conn) throws SQLException, NumberFormatException, IOException {
 		// TODO
@@ -345,6 +347,6 @@ public class DBAccessor {
 		//realitzar la inserció corresponent
 
 		conn.commit();
-		
+
 	}
 }
