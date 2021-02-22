@@ -276,7 +276,7 @@ public class DBAccessor {
 
 	// TODO
 	public void desassignaArticleARevista(Connection conn) throws SQLException, IOException {
-//		ResultSet rs = null;
+		ResultSet rs = null;
 //		Statement st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 //		InputStreamReader isr = new InputStreamReader(System.in);
 //		BufferedReader br = new BufferedReader(isr);
@@ -288,6 +288,7 @@ public class DBAccessor {
 //			rs = st.executeQuery("SELECT * FROM articles WHERE id_article="+resposta+";");
 //			// actualitza el camp
 //			rs.updateInt("id_revista",0);
+		rs.updateNull();
 //			// actualitza la fila
 //			rs.updateRow();
 //
