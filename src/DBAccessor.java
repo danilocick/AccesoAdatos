@@ -210,10 +210,10 @@ public class DBAccessor {
 		try {
 			rs = st.executeQuery("SELECT * FROM articles WHERE id_revista IS NULL");
 
-			if(!rs.next()){
-				System.out.println("No hi ha articles per afegir");
+			if (rs.next() == false) {
+				System.out.println("No hi ha articles pendents d'associar revistes. ");
 			} else {
-				do {
+				do{
 					System.out.println("Titol: " + rs.getString("titol"));
 
 					System.out.println("Vol incorporar aquest article a una revista? (S/N)");
@@ -228,9 +228,8 @@ public class DBAccessor {
 						// actualitza la fila
 						rs.updateRow();
 					}
-				} while (rs.next());
+				}while (rs.next());
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
